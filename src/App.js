@@ -5,13 +5,16 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Rota from "./Rotas/Rota";
 import SignUp from "./Rotas/SignUp";
 import Subscriptions from "./Rotas/Subscriptions";
+import TokenContext from "./Contexts/TokenContext";
 
 
 export default function App() {
 
+  const  [token, setToken] = useState("");
   return (
     <Body>
       <GlobalStyle/>
+      <TokenContext.Provider value={{token, setToken}}></TokenContext.Provider>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Rota />} />

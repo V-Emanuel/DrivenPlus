@@ -2,6 +2,7 @@ import { React, useEffect, useState, useContext } from "react";
 import { Body } from "../Styled/LoginRegisterCSS";
 import {useNavigate, Link } from "react-router-dom";
 import styled from "styled-components";
+import axios from "axios";
 
 export default function SignUp() {
 
@@ -12,10 +13,24 @@ export default function SignUp() {
     const navigate = useNavigate();
     const [usage, setUsage] = useState(false);
 
+    function createAccount(e){
+        e.preventDefault();
+        const URL = "https://mock-api.driven.com.br/api/v4/driven-plus/auth/sign-up";
+        const body = {email, name, cpf, password};
+
+        const promise = axios.post(URL, body);
+        promise.then((res)=> {
+            navigate("/sign-up");
+        })
+        promise.catch((err) => {
+            alert(err.response.data.message)
+        })
+    }
+
     return (
         <Body>
             <Margin/>
-            <form>
+            <form onSubmit={createAccount}>
             <input
                     value={name}
                     type="text"
