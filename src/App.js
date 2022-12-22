@@ -14,7 +14,7 @@ export default function App() {
   return (
     <Body>
       <GlobalStyle/>
-      <TokenContext.Provider value={{token, setToken}}></TokenContext.Provider>
+      <TokenContext.Provider value={{token, setToken}}>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Rota />} />
@@ -22,6 +22,7 @@ export default function App() {
           <Route path="/subscriptions" element={<Subscriptions/>} />
         </Routes>
       </BrowserRouter>
+      </TokenContext.Provider>
     </Body>
   );
 }

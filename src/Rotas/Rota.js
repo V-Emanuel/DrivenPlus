@@ -11,7 +11,7 @@ export default function Rota() {
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
     const navigate = useNavigate("");
-    const [usage, setUsage] = (false);
+    const [usage, setUsage] = useState(false);
 
     function login(e){
         e.preventDefault();
@@ -29,6 +29,7 @@ export default function Rota() {
         })
         promise.catch((err) => {
             alert(err.response.data.message)
+            setUsage(false)
         })
     }
 

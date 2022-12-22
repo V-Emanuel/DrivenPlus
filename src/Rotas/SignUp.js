@@ -17,13 +17,15 @@ export default function SignUp() {
         e.preventDefault();
         const URL = "https://mock-api.driven.com.br/api/v4/driven-plus/auth/sign-up";
         const body = {email, name, cpf, password};
-
+        setUsage(true)
         const promise = axios.post(URL, body);
         promise.then((res)=> {
             navigate("/sign-up");
+            console.log(res.data);
         })
         promise.catch((err) => {
-            alert(err.response.data.message)
+            alert(err.response.data.message);
+            setUsage(false);
         })
     }
 
@@ -40,7 +42,7 @@ export default function SignUp() {
                     disabled={usage}>
                 </input>
                 <input
-                    type="url"
+                    type="number"
                     placeholder="CPF"
                     onChange={e => setCpf(e.target.value )}
                     required
