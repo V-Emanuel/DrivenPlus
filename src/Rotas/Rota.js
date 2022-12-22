@@ -14,7 +14,6 @@ export default function Rota() {
             <Logo src={logo}></Logo>
             <form >
                 <input
-                    data-test="email-input"
                     value={email}
                     type="email"
                     placeholder="E-mail"
@@ -22,7 +21,6 @@ export default function Rota() {
                     required>
                 </input>
                 <input
-                    data-test="password-input"
                     value={password}
                     type="password"
                     placeholder="Senha"
@@ -31,7 +29,7 @@ export default function Rota() {
                 </input>
                 <button type="submit"><p>ENTRAR</p></button>
             </form>
-            <Link to="/cadastro"><p>Não possui uma conta? Cadastre-se</p></Link>
+            <Link to="/sign-up"><p>Não possui uma conta? Cadastre-se</p></Link>
         </Body>
     );
 }

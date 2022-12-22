@@ -3,7 +3,7 @@ import { Body } from "../Styled/LoginRegisterCSS";
 import {useNavigate, Link } from "react-router-dom";
 import styled from "styled-components";
 
-export default function Rota() {
+export default function SignUp() {
 
     const [password, setPassword] = useState("")
     const [email, setEmail] = useState("")
@@ -17,7 +17,6 @@ export default function Rota() {
             <Margin/>
             <form>
             <input
-                    data-test="user-name-input"
                     value={name}
                     type="text"
                     placeholder="Nome"
@@ -26,7 +25,6 @@ export default function Rota() {
                     disabled={usage}>
                 </input>
                 <input
-                    data-test="user-image-input"
                     type="url"
                     placeholder="CPF"
                     onChange={e => setCpf(e.target.value )}
@@ -34,7 +32,6 @@ export default function Rota() {
                     disabled={usage}>
                 </input>
                 <input
-                    data-test="email-input"
                     value={email}
                     type="email"
                     placeholder="E-mail"
@@ -43,7 +40,6 @@ export default function Rota() {
                     disabled={usage}>
                 </input>
                 <input
-                    data-test="password-input"
                     value={password}
                     type="password"
                     placeholder="Senha"
