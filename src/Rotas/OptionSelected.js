@@ -10,11 +10,11 @@ export default function OptionSelected() {
     const { token, backColor } = useContext(AppContext);
     const [sub, setSub] = useState([]);
     const [perk, setPerk] = useState([]);
-    const [cardName, setCardName] = useState();
-    const [cardNumber, setCardNumber] = useState();
-    const [securityCode, setSecurityCode] = useState();
-    const [validity, setValidity] = useState();
-    const [usage, setUsage] = useState();
+    const [cardName, setCardName] = useState("");
+    const [cardNumber, setCardNumber] = useState("");
+    const [securityCode, setSecurityCode] = useState("");
+    const [validity, setValidity] = useState("");
+    const [usage, setUsage] = useState(false);
     const [showConfirme, setShowConfirme] = useState(false);
 
     const URL = `https://mock-api.driven.com.br/api/v4/driven-plus/subscriptions/memberships/${idPlano}`
@@ -32,10 +32,15 @@ export default function OptionSelected() {
         promise.catch((err) => { alert(err.response.data.message) })
     }, [])
 
+    function ConfirmePlan(){
+        setShowConfirme(true);
+        console.log(validity);
+    }
+
     return (
         <>
             <ConfirmPage showConfirme={showConfirme}>
-                <ion-icon name="close-circle-sharp"></ion-icon>
+                <ion-icon name="close-circle-sharp" onClick={() => {setShowConfirme(false)}}></ion-icon>
                 <div>
                     <p>{`Tem certeza que deseja assinar o plano Driven Plus (${sub.price})?`}</p>
                     <span>
@@ -70,7 +75,7 @@ export default function OptionSelected() {
                 <Benefits><p>{`R$${sub.price} cobrados mensalmente`}</p></Benefits>
             </Description>
             <Inputs>
-                <form>
+                <form onSubmit={ConfirmePlan}>
                     <input
                         value={cardName}
                         type="text"
