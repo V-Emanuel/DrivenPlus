@@ -1,13 +1,13 @@
 import { React, useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import TokenContext from "../Contexts/TokenContext";
+import AppContext from "../Contexts/AppContext";
 import axios from "axios";
 
 export default function OptionSelected() {
 
     const { idPlano } = useParams();
-    const { token } = useContext(TokenContext);
+    const { token, backColor } = useContext(AppContext);
     const [sub, setSub] = useState([]);
     const [perk, setPerk] = useState([]);
     const [cardName, setCardName] = useState();
@@ -15,7 +15,7 @@ export default function OptionSelected() {
     const [securityCode, setSecurityCode] = useState();
     const [validity, setValidity] = useState();
     const [usage, setUsage] = useState();
-
+    const [showConfirme, setShowConfirme] = useState(false);
 
     const URL = `https://mock-api.driven.com.br/api/v4/driven-plus/subscriptions/memberships/${idPlano}`
     const config = {
@@ -34,6 +34,16 @@ export default function OptionSelected() {
 
     return (
         <>
+            <ConfirmPage showConfirme={showConfirme}>
+                <ion-icon name="close-circle-sharp"></ion-icon>
+                <div>
+                    <p>{`Tem certeza que deseja assinar o plano Driven Plus (${sub.price})?`}</p>
+                    <span>
+                        <button className="cancel">Não</button>
+                        <button className="confirme">SIM</button>
+                    </span>
+                </div>
+            </ConfirmPage>
             <BackPage>
                 <Link to={"/subscriptions"}>
                     <ion-icon name="arrow-back-outline"></ion-icon>
@@ -59,7 +69,7 @@ export default function OptionSelected() {
                 </span>
                 <Benefits><p>{`R$${sub.price} cobrados mensalmente`}</p></Benefits>
             </Description>
-            <Jorge>
+            <Inputs>
                 <form>
                     <input
                         value={cardName}
@@ -101,11 +111,77 @@ export default function OptionSelected() {
                         <p>Assinar</p>
                     </button>
                 </form>
-            </Jorge>
+            </Inputs>
         </>
     );
 }
-
+const ConfirmPage = styled.div`
+    position: fixed;
+    z-index: 7;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    display: ${props => props.showConfirme ? "flex" : "none"};;
+    align-items: center;
+    justify-content: center;
+        ion-icon{
+            color: white;
+            font-size: 50px;
+            position: fixed;
+            right: 20px;
+            top: 20px;
+        }
+    div{
+        width: 248px;
+        height: 210px;
+        background: #FFFFFF;
+        border-radius: 12px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+        box-sizing: border-box;
+        padding-left: 22px;
+        padding-right: 22px;
+        p{
+            width: 204px;
+            height: 67px;
+            flex-wrap: wrap;
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 700;
+            font-size: 18px;
+            line-height: 21px;
+            text-align: center;
+            color: #000000;
+        }
+        span{
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            button{
+                width: 95px;
+                height: 52px;
+                border-radius: 8px;
+                &:hover{
+                    cursor: pointer;
+                }
+            }
+            .cancel{
+                background: #CECECE;
+                border-color: #DCDCDC;
+                font-weight: 400;
+                color: #FFFFFF;
+            }
+            .confirme{
+                background: #FF4791;
+                border-color: #EE82EE;
+                font-weight: 700;
+                color: #FFFFFF;
+            }
+        }
+    }
+`;
 const BackPage = styled.div`
     width: 100%;
     height: 90px;
@@ -178,7 +254,8 @@ const Benefits = styled.div`
         text-decoration:none;
     }
 `;
-const Jorge = styled.div`
+const Inputs = styled.div`
+  z-index: 1;
   form{
     input{
         width: 299px;

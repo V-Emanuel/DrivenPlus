@@ -3,7 +3,7 @@ import axios from "axios";
 import { Logo, Body } from "../Styled/LoginRegisterCSS";
 import logo from "../assets/img/logo.png";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import TokenContext from "../Contexts/TokenContext";
+import TokenContext from "../Contexts/AppContext";
 
 export default function Rota() {
 

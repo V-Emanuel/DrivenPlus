@@ -6,16 +6,17 @@ import Rota from "./Rotas/Rota";
 import SignUp from "./Rotas/SignUp";
 import OptionSelected from "./Rotas/OptionSelected";
 import Subscriptions from "./Rotas/Subscriptions";
-import TokenContext from "./Contexts/TokenContext";
+import AppContext from "./Contexts/AppContext";
 
 
 export default function App() {
 
   const  [token, setToken] = useState("");
+  const [backColor, setBackColor] = useState(false);
   return (
-    <Body>
+    <Body backColor={backColor}>
       <GlobalStyle/>
-      <TokenContext.Provider value={{token, setToken}}>
+      <AppContext.Provider value={{token, setToken, setBackColor}}>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Rota />} />
@@ -24,7 +25,7 @@ export default function App() {
           <Route path="/subscriptions/:idPlano" element={<OptionSelected/>} />
         </Routes>
       </BrowserRouter>
-      </TokenContext.Provider>
+      </AppContext.Provider>
     </Body>
   );
 }
@@ -36,5 +37,5 @@ const Body = styled.div`
   width: 100vw;
   height: 100vh;
   background-color: #0E0E13;
-;
+  position: absolute;
 `;

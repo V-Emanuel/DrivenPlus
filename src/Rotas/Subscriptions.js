@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import {React, useEffect, useState, useContext} from "react";
 import {Link} from "react-router-dom";
-import TokenContext from "../Contexts/TokenContext";
+import TokenContext from "../Contexts/AppContext";
 import axios from "axios";
 
 export default function Subscriptions() {
