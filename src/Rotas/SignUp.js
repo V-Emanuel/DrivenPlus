@@ -1,25 +1,25 @@
 import { React, useEffect, useState, useContext } from "react";
 import { Body } from "../Styled/LoginRegisterCSS";
-import {useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 
 export default function SignUp() {
 
-    const [password, setPassword] = useState("")
-    const [email, setEmail] = useState("")
-    const [cpf, setCpf] = useState("")
-    const [name, setName] = useState("")
+    const [password, setPassword] = useState("");
+    const [email, setEmail] = useState("");
+    const [cpf, setCpf] = useState("");
+    const [name, setName] = useState("");
     const navigate = useNavigate();
     const [usage, setUsage] = useState(false);
 
-    function createAccount(e){
+    function createAccount(e) {
         e.preventDefault();
         const URL = "https://mock-api.driven.com.br/api/v4/driven-plus/auth/sign-up";
-        const body = {email, name, cpf, password};
+        const body = { email, name, cpf, password };
         setUsage(true)
         const promise = axios.post(URL, body);
-        promise.then((res)=> {
+        promise.then((res) => {
             navigate("/sign-up");
             console.log(res.data);
         })
@@ -31,20 +31,20 @@ export default function SignUp() {
 
     return (
         <Body>
-            <Margin/>
+            <Margin />
             <form onSubmit={createAccount}>
-            <input
+                <input
                     value={name}
                     type="text"
                     placeholder="Nome"
-                    onChange={e => setName(e.target.value )}
+                    onChange={e => setName(e.target.value)}
                     required
                     disabled={usage}>
                 </input>
                 <input
                     type="number"
                     placeholder="CPF"
-                    onChange={e => setCpf(e.target.value )}
+                    onChange={e => setCpf(e.target.value)}
                     required
                     disabled={usage}>
                 </input>
@@ -52,7 +52,7 @@ export default function SignUp() {
                     value={email}
                     type="email"
                     placeholder="E-mail"
-                    onChange={e => setEmail(e.target.value )}
+                    onChange={e => setEmail(e.target.value)}
                     required
                     disabled={usage}>
                 </input>
@@ -60,7 +60,7 @@ export default function SignUp() {
                     value={password}
                     type="password"
                     placeholder="Senha"
-                    onChange={e => setPassword(e.target.value )}
+                    onChange={e => setPassword(e.target.value)}
                     required
                     disabled={usage}>
                 </input>

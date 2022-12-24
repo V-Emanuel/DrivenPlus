@@ -4,6 +4,7 @@ import { React, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Rota from "./Rotas/Rota";
 import SignUp from "./Rotas/SignUp";
+import OptionSelected from "./Rotas/OptionSelected";
 import Subscriptions from "./Rotas/Subscriptions";
 import TokenContext from "./Contexts/TokenContext";
 
@@ -20,6 +21,7 @@ export default function App() {
           <Route path="/" element={<Rota />} />
           <Route path="/sign-up" element={<SignUp/>} />
           <Route path="/subscriptions" element={<Subscriptions/>} />
+          <Route path="/subscriptions/:idPlano" element={<OptionSelected/>} />
         </Routes>
       </BrowserRouter>
       </TokenContext.Provider>

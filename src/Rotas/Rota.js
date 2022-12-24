@@ -7,7 +7,7 @@ import TokenContext from "../Contexts/TokenContext";
 
 export default function Rota() {
 
-    const {token, setToken} = useContext(TokenContext);
+    const {setToken} = useContext(TokenContext);
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
     const navigate = useNavigate("");

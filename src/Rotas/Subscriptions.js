@@ -1,23 +1,35 @@
 import styled from "styled-components";
-import React from "react";
-import group1 from "../assets/img/group1.png"
-import group2 from "../assets/img/group2.png"
-import group3 from "../assets/img/group3.png"
+import {React, useEffect, useState, useContext} from "react";
+import {Link} from "react-router-dom";
+import TokenContext from "../Contexts/TokenContext";
+import axios from "axios";
 
 export default function Subscriptions() {
 
-    const options = [{ id: "1", image: group1, price: "R$39,99" },
-    { id: "2", image: group2, price: "R$69,99" },
-    { id: "3", image: group3, price: "R$99,99" }]
+    const {token} = useContext(TokenContext);
+    const [subs, setSubs] = useState([]);
+    const URL = "https://mock-api.driven.com.br/api/v4/driven-plus/subscriptions/memberships"
+    const config = {
+        headers: {
+            "Authorization": `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyMCwiaWF0IjoxNjcxODQwMjUwfQ.CmnGTOaXOq3zqMAZJ6xnGYUArSPV-oDWTMphJ1s7af0`
+        }
+    }
+    useEffect(() => {
+        const promise = axios.get(URL, config)
+        promise.then((res) => setSubs(res.data))
+        promise.catch((err)=>{alert(err.response.data.message)})
+    }, [])
 
     return (
         <>
             <Title>Escolha seu Plano</Title>
-            {options.map((item) =>
-                <Option>
+            {subs.map((item) =>
+            <Link key={item.id} to={`/subscriptions/${item.id}`} style = {{textDecoration: 'none'}}>
+                <Option >
                     <img src={item.image}></img>
                     <p>{item.price}</p>
                 </Option>
+                </Link>
             )}
         </>
     );
