@@ -7,15 +7,15 @@ import axios from "axios";
 export default function OptionSelected() {
 
     const { idPlano } = useParams();
-    const { token, backColor } = useContext(AppContext);
+    const { token, membershipId, setMembershipId} = useContext(AppContext);
     const [sub, setSub] = useState([]);
     const [perk, setPerk] = useState([]);
     const [cardName, setCardName] = useState("");
     const [cardNumber, setCardNumber] = useState("");
-    const [securityCode, setSecurityCode] = useState("");
-    const [validity, setValidity] = useState("");
-    const [usage, setUsage] = useState(false);
+    const [securityNumber, setSecurityNumber] = useState("");
+    const [expirationDate, setExpirationDate] = useState("");
     const [showConfirme, setShowConfirme] = useState(false);
+    const navigate = useNavigate();
 
     const URL = `https://mock-api.driven.com.br/api/v4/driven-plus/subscriptions/memberships/${idPlano}`
     const config = {
@@ -28,13 +28,34 @@ export default function OptionSelected() {
         promise.then((res) => {
             setSub(res.data);
             setPerk(res.data.perks);
+            setMembershipId(res.data.id);
         })
         promise.catch((err) => { alert(err.response.data.message) })
     }, [])
 
-    function ConfirmePlan(){
+    function ConfirmePlan(e){
+        e.preventDefault()
         setShowConfirme(true);
-        console.log(validity);
+    }
+    function cancelData(){
+        setShowConfirme(false);
+        setCardName("");
+        setCardNumber("");
+        setSecurityNumber("");
+        setExpirationDate("");
+
+    }
+    function submitData(){
+        const URL_Plan = "https://mock-api.driven.com.br/api/v4/driven-plus/subscriptions";
+        const body = { membershipId, cardName, cardNumber, securityNumber, expirationDate};
+        const promise = axios.post(URL_Plan, body, config);
+        promise.then((res) => {
+            navigate("/home");
+            console.log(res.data);
+        })
+        promise.catch((err) => {
+            alert(err.response.data.message);
+        })
     }
 
     return (
@@ -44,8 +65,8 @@ export default function OptionSelected() {
                 <div>
                     <p>{`Tem certeza que deseja assinar o plano Driven Plus (${sub.price})?`}</p>
                     <span>
-                        <button className="cancel">Não</button>
-                        <button className="confirme">SIM</button>
+                        <button className="cancel" onClick={cancelData}>Não</button>
+                        <button className="confirme" onClick={submitData}>SIM</button>
                     </span>
                 </div>
             </ConfirmPage>
@@ -81,38 +102,34 @@ export default function OptionSelected() {
                         type="text"
                         placeholder="Nome impresso no cartão"
                         onChange={e => setCardName(e.target.value)}
-                        required
-                        disabled={usage}>
+                        required>
                     </input>
                     <input
                         value={cardNumber}
                         type="number"
                         placeholder="Dígitos do Cartão"
                         onChange={e => setCardNumber(e.target.value)}
-                        required
-                        disabled={usage}>
+                        required>
                     </input>
                     <div>
                         <input
                             className="smallInput"
-                            value={securityCode}
+                            value={securityNumber}
                             type="number"
                             placeholder="Código de Segurança"
-                            onChange={e => setSecurityCode(e.target.value)}
-                            required
-                            disabled={usage}>
+                            onChange={e => setSecurityNumber(e.target.value)}
+                            required>
                         </input>
                         <input
                             className="smallInput"
-                            value={validity}
+                            value={expirationDate}
                             type="number"
                             placeholder="Validade"
-                            onChange={e => setValidity(e.target.value)}
-                            required
-                            disabled={usage}>
+                            onChange={e => setExpirationDate(e.target.value)}
+                            required>
                         </input>
                     </div>
-                    <button type="submit" disabled={usage}>
+                    <button type="submit">
                         <p>Assinar</p>
                     </button>
                 </form>
@@ -135,6 +152,9 @@ const ConfirmPage = styled.div`
             position: fixed;
             right: 20px;
             top: 20px;
+            &:hover{
+                cursor: pointer;
+            }
         }
     div{
         width: 248px;

@@ -12,11 +12,11 @@ import AppContext from "./Contexts/AppContext";
 export default function App() {
 
   const  [token, setToken] = useState("");
-  const [backColor, setBackColor] = useState(false);
+  const  [membershipId, setMembershipId] = useState("");
   return (
-    <Body backColor={backColor}>
+    <Body>
       <GlobalStyle/>
-      <AppContext.Provider value={{token, setToken, setBackColor}}>
+      <AppContext.Provider value={{token, setToken, membershipId, setMembershipId}}>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Rota />} />

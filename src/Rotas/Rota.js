@@ -24,7 +24,7 @@ export default function Rota() {
                 navigate("/subscriptions");
                 setToken(res.data.token);
             }else{
-                navigate("/");
+                navigate("/home");
             }   
         })
         promise.catch((err) => {
