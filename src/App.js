@@ -6,6 +6,7 @@ import Rota from "./Rotas/Rota";
 import SignUp from "./Rotas/SignUp";
 import OptionSelected from "./Rotas/OptionSelected";
 import Subscriptions from "./Rotas/Subscriptions";
+import Home from "./Rotas/Home";
 import AppContext from "./Contexts/AppContext";
 
 
@@ -23,6 +24,7 @@ export default function App() {
           <Route path="/sign-up" element={<SignUp/>} />
           <Route path="/subscriptions" element={<Subscriptions/>} />
           <Route path="/subscriptions/:idPlano" element={<OptionSelected/>} />
+          <Route path="/home" element={<Home/>} />
         </Routes>
       </BrowserRouter>
       </AppContext.Provider>
@@ -37,5 +39,4 @@ const Body = styled.div`
   width: 100vw;
   height: 100vh;
   background-color: #0E0E13;
-  position: absolute;
 `;

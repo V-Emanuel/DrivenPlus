@@ -86,7 +86,7 @@ export default function OptionSelected() {
                 </span>
                 <Benefits>
                     {perk.map((item) =>
-                        <a href={item.link} key={item.id}> <p>{`${item.id}. ${item.title}`}</p></a>
+                        <a key={item.id}> <p>{`${item.id}. ${item.title}`}</p></a>
                     )}
                 </Benefits>
                 <span>
