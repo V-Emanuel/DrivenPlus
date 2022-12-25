@@ -3,25 +3,25 @@ import { Body } from "../Styled/LoginRegisterCSS";
 import { useNavigate, Link } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
+import AppContext from "../Contexts/AppContext";
 
 export default function SignUp() {
 
+    const {name, setNameLS} = useContext(AppContext)
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
     const [cpf, setCpf] = useState("");
-    const [name, setName] = useState("");
     const navigate = useNavigate();
     const [usage, setUsage] = useState(false);
 
     function createAccount(e) {
         e.preventDefault();
         const URL = "https://mock-api.driven.com.br/api/v4/driven-plus/auth/sign-up";
-        const body = { email, name, cpf, password };
+        const body = {email, name, cpf, password};
         setUsage(true)
         const promise = axios.post(URL, body);
         promise.then((res) => {
-            navigate("/sign-up");
-            console.log(res.data);
+            navigate("/");
         })
         promise.catch((err) => {
             alert(err.response.data.message);
@@ -37,7 +37,7 @@ export default function SignUp() {
                     value={name}
                     type="text"
                     placeholder="Nome"
-                    onChange={e => setName(e.target.value)}
+                    onChange={e => setNameLS(e.target.value)}
                     required
                     disabled={usage}>
                 </input>

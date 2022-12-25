@@ -11,7 +11,7 @@ export default function Subscriptions() {
     const URL = "https://mock-api.driven.com.br/api/v4/driven-plus/subscriptions/memberships"
     const config = {
         headers: {
-            "Authorization": `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyMCwiaWF0IjoxNjcxODQwMjUwfQ.CmnGTOaXOq3zqMAZJ6xnGYUArSPV-oDWTMphJ1s7af0`
+            "Authorization": `Bearer ${token}`
         }
     }
     useEffect(() => {

@@ -7,7 +7,7 @@ import axios from "axios";
 export default function OptionSelected() {
 
     const { idPlano } = useParams();
-    const { token, membershipId, setMembershipId} = useContext(AppContext);
+    const { token, membershipId, setMembershipIdLS} = useContext(AppContext);
     const [sub, setSub] = useState([]);
     const [perk, setPerk] = useState([]);
     const [cardName, setCardName] = useState("");
@@ -20,7 +20,7 @@ export default function OptionSelected() {
     const URL = `https://mock-api.driven.com.br/api/v4/driven-plus/subscriptions/memberships/${idPlano}`
     const config = {
         headers: {
-            "Authorization": `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyMCwiaWF0IjoxNjcxODQwMjUwfQ.CmnGTOaXOq3zqMAZJ6xnGYUArSPV-oDWTMphJ1s7af0`
+            "Authorization": `Bearer ${token}`
         }
     }
     useEffect(() => {
@@ -28,7 +28,7 @@ export default function OptionSelected() {
         promise.then((res) => {
             setSub(res.data);
             setPerk(res.data.perks);
-            setMembershipId(res.data.id);
+            setMembershipIdLS(res.data.id);
         })
         promise.catch((err) => { alert(err.response.data.message) })
     }, [])
@@ -50,7 +50,7 @@ export default function OptionSelected() {
         const body = { membershipId, cardName, cardNumber, securityNumber, expirationDate};
         const promise = axios.post(URL_Plan, body, config);
         promise.then((res) => {
-            navigate("/home");
+            navigate(`/home/${membershipId}`);
             console.log(res.data);
         })
         promise.catch((err) => {
@@ -86,7 +86,7 @@ export default function OptionSelected() {
                 </span>
                 <Benefits>
                     {perk.map((item) =>
-                        <a key={item.id}> <p>{`${item.id}. ${item.title}`}</p></a>
+                        <p key={item.id}>{`${item.id}. ${item.title}`}</p>
                     )}
                 </Benefits>
                 <span>

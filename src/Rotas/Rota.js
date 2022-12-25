@@ -7,7 +7,7 @@ import TokenContext from "../Contexts/AppContext";
 
 export default function Rota() {
 
-    const {setToken} = useContext(TokenContext);
+    const {setTokenLS, membershipId} = useContext(TokenContext);
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
     const navigate = useNavigate("");
@@ -22,9 +22,9 @@ export default function Rota() {
         promise.then((res)=> {
             if(res.data.membership == null){
                 navigate("/subscriptions");
-                setToken(res.data.token);
+                setTokenLS(res.data.token);
             }else{
-                navigate("/home");
+                navigate(`/home/${membershipId}`);
             }   
         })
         promise.catch((err) => {

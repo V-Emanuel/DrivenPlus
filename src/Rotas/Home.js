@@ -2,16 +2,18 @@ import styled from "styled-components";
 import { React, useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import AppContext from "../Contexts/AppContext";
 
 export default function Home() {
 
-    //-------------------------------------------------------
+    const {idHome} = useParams();
+    const {token, name} = useContext(AppContext)
     const [sub, setSub] = useState([]);
     const [perk, setPerk] = useState([]);
-    const URL = `https://mock-api.driven.com.br/api/v4/driven-plus/subscriptions/memberships/3`
+    const URL = `https://mock-api.driven.com.br/api/v4/driven-plus/subscriptions/memberships/${idHome}`
     const config = {
         headers: {
-            "Authorization": `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyMCwiaWF0IjoxNjcxODQwMjUwfQ.CmnGTOaXOq3zqMAZJ6xnGYUArSPV-oDWTMphJ1s7af0`
+            "Authorization": `Bearer ${token}`
         }
     }
     useEffect(() => {
@@ -23,23 +25,20 @@ export default function Home() {
         promise.catch((err) => { alert(err.response.data.message) })
     }, [])
 
-    //-------------------------------------------------------
-
-
     return (
         <>
             <Header>
                 <img src={sub.image}></img>
                 <ion-icon name="person-circle-outline"></ion-icon>
             </Header>
-            <Tittle>Olá, Jorge</Tittle>
+            <Tittle>{`Olá, ${name}`}</Tittle>
             <BenefitsList>
                 {perk.map((item) =>
                     <a href={item.link} key={item.id}> <div><p>{`${item.title}`}</p></div></a>
                 )}
                 <footer>
                     <div><p>Mudar Plano</p></div>
-                    <div className="cancelPlan"><p>Cancelar Planos</p></div>
+                    <div className="cancelPlan"><p>Cancelar Plano</p></div>
                 </footer>
             </BenefitsList>
         </>

@@ -12,19 +12,35 @@ import AppContext from "./Contexts/AppContext";
 
 export default function App() {
 
-  const  [token, setToken] = useState("");
-  const  [membershipId, setMembershipId] = useState("");
+  const  tokenLS = localStorage.getItem("token");
+  const  membershipIdLS = localStorage.getItem("membershipId");
+  const  nameLS = localStorage.getItem("name");
+  const [token, setToken] = useState(tokenLS)
+  const  [membershipId, setMembershipId] = useState(membershipIdLS);
+  const [name, setName] = useState(nameLS);
+  function setTokenLS(t){
+    setToken(t);
+    localStorage.setItem("token", t);
+  }
+  function setMembershipIdLS(m){
+    setMembershipId(m);
+    localStorage.setItem("membershipId", m);
+  }
+  function setNameLS(n){
+    setName(n);
+    localStorage.setItem("name", n);
+  }
   return (
     <Body>
       <GlobalStyle/>
-      <AppContext.Provider value={{token, setToken, membershipId, setMembershipId}}>
+      <AppContext.Provider value={{token, setTokenLS, membershipId, setMembershipIdLS, name, setNameLS}}>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Rota />} />
           <Route path="/sign-up" element={<SignUp/>} />
           <Route path="/subscriptions" element={<Subscriptions/>} />
           <Route path="/subscriptions/:idPlano" element={<OptionSelected/>} />
-          <Route path="/home" element={<Home/>} />
+          <Route path="/home/:idHome" element={<Home/>} />
         </Routes>
       </BrowserRouter>
       </AppContext.Provider>
