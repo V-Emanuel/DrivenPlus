@@ -7,11 +7,21 @@ import TokenContext from "../Contexts/AppContext";
 
 export default function Rota() {
 
-    const {setTokenLS, membershipId} = useContext(TokenContext);
+    const {token, setTokenLS, membershipId} = useContext(TokenContext);
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
     const navigate = useNavigate("");
     const [usage, setUsage] = useState(false);
+
+    useEffect(() => {
+        if (token) {
+            if (membershipId) {
+                navigate(`/home/${membershipId}`)
+            } else {
+                navigate("/subscriptions")
+            }
+        }
+    }, [])
 
     function login(e){
         e.preventDefault();
