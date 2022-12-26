@@ -6,12 +6,11 @@ import AppContext from "../Contexts/AppContext";
 
 export default function Home() {
 
-    const {idHome} = useParams();
-    const {token, name} = useContext(AppContext)
+    const {token, name, membershipId} = useContext(AppContext)
     const [sub, setSub] = useState([]);
     const [perk, setPerk] = useState([]);
     const navigate = useNavigate();
-    const URL = `https://mock-api.driven.com.br/api/v4/driven-plus/subscriptions/memberships/${idHome}`
+    const URL = `https://mock-api.driven.com.br/api/v4/driven-plus/subscriptions/memberships/${membershipId}`
     const config = {
         headers: {
             "Authorization": `Bearer ${token}`
@@ -26,9 +25,13 @@ export default function Home() {
         promise.catch((err) => { alert(err.response.data.message) })
     }, [])
 
-    function CancelPlan(){
+    function CancelPlan(e){
+        e.preventDefault();
         const requisicao = axios.delete("https://mock-api.driven.com.br/api/v4/driven-plus/subscriptions", config);
-        requisicao.then(()=> {navigate("/subscriptions")});
+        requisicao.then(()=> {
+            navigate("/subscriptions")
+            localStorage.removeItem("membershipId")
+        });
     }
     return (
         <>
