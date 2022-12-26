@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { React, useState, useEffect, useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import AppContext from "../Contexts/AppContext";
 
@@ -10,6 +10,7 @@ export default function Home() {
     const {token, name} = useContext(AppContext)
     const [sub, setSub] = useState([]);
     const [perk, setPerk] = useState([]);
+    const navigate = useNavigate();
     const URL = `https://mock-api.driven.com.br/api/v4/driven-plus/subscriptions/memberships/${idHome}`
     const config = {
         headers: {
@@ -25,6 +26,10 @@ export default function Home() {
         promise.catch((err) => { alert(err.response.data.message) })
     }, [])
 
+    function CancelPlan(){
+        const requisicao = axios.delete("https://mock-api.driven.com.br/api/v4/driven-plus/subscriptions", config);
+        requisicao.then(()=> {navigate("/subscriptions")});
+    }
     return (
         <>
             <Header>
@@ -37,8 +42,8 @@ export default function Home() {
                     <a href={item.link} key={item.id}> <div><p>{`${item.title}`}</p></div></a>
                 )}
                 <footer>
-                    <div><p>Mudar Plano</p></div>
-                    <div className="cancelPlan"><p>Cancelar Plano</p></div>
+                    <div><p onClick={() => navigate("/subscriptions")}>Mudar Plano</p></div>
+                    <div onClick={CancelPlan} className="cancelPlan"><p>Cancelar Plano</p></div>
                 </footer>
             </BenefitsList>
         </>
@@ -101,13 +106,15 @@ const BenefitsList = styled.div`
             line-height: 16px;
             color: #FFFFFF;
         }
+        &:hover{
+            cursor: pointer;
+        }
     }
     footer{
         position: fixed;
         bottom:10px;
         .cancelPlan{
             background: #FF4747;
-;
         }
     }
 `;
